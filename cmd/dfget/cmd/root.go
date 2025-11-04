@@ -184,6 +184,8 @@ func init() {
 
 	flagSet.String("cachedir", dfgetConfig.CacheDir, "Dfget cache directory")
 
+	flagSet.String("plugindir", dfgetConfig.CacheDir, "Dfget plugin directory")
+
 	flagSet.BoolP("recursive", "r", dfgetConfig.Recursive,
 		"Recursively download all resources in target url, the target source client must support list action")
 
@@ -231,6 +233,10 @@ func initDfgetDfpath(cfg *config.ClientOption) (dfpath.Dfpath, error) {
 
 	if cfg.DaemonSock != "" {
 		options = append(options, dfpath.WithDownloadUnixSocketPath(cfg.DaemonSock))
+	}
+
+	if cfg.PluginDir != "" {
+		options = append(options, dfpath.WithPluginDir(cfg.PluginDir))
 	}
 
 	return dfpath.New(options...)
